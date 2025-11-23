@@ -116,6 +116,9 @@ header .topbar-right {
   line-height: 1.6;
   font-size: 0.9rem;
 }
+.wallet-card-details span p{
+    color: var(--text-white);
+}
 .actions {
   margin-top: 3rem;
 }
