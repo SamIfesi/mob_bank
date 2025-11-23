@@ -1,0 +1,219 @@
+:root {
+  /* The card has a slight gradient, here is a close approximation */
+  --primary-gradient: linear-gradient(135deg, #5200a3 0%, #2a0054 100%);
+  --primary-black: #121212; /* The dark 'Add money' button */
+  --green-light: #6dc474;
+  /* --- Text Colors --- */
+  /* Main headings (e.g., "Hi, John!", "$16,567.00") */
+  --text-primary: #000000;
+  /* Subtitles and labels (e.g., "How are you today?", "Number") */
+  --text-secondary: #8a8a8f;
+  /* Text inside the purple card and dark buttons */
+  --text-white: #f2f4f8;
+  /* Link text (e.g., "See All") */
+  --text-link: #1a56c4;
+
+  /* --- Background Surfaces --- */
+  /* The main app background */
+  --bg-body: #ffffff;
+  /* The light blue-grey background for action buttons (Send, Receive) & Transaction items */
+  --bg-surface-light: #f2f4f8;
+
+  /* --- Semantic/Status Colors --- */
+  /* Success/Deposit (Green text + Light green badge bg) */
+  --color-success: #2e7d32;
+  --bg-success-light: #e8f5e9;
+
+  /* Expense/Transfer (Red/Pink text + Light pink bg) */
+  --color-danger: #c62828;
+  --bg-danger-light: #ffebee;
+
+  /* Info/Neutral (Teal for Top up icon) */
+  --color-info: #00bcd4;
+  --bg-info-light: #e0f7fa;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Stack Sans Text";
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+body {
+  padding: 1.5rem;
+}
+.flex-space {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+header .topbar-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+header .topbar-left h2 {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+}
+header .topbar-left p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+header .topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.topbar-right .reward {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  background: transparent;
+  border: 1px solid var(--green-light);
+  padding: 0.5rem 0.8rem;
+  border-radius: 2rem;
+  font-size: 0.9rem;
+  color: var(--green-light);
+}
+.notifications {
+  border: none;
+  background: transparent;
+}
+.reward i,
+.notifications i,
+.view-bal {
+  font-size: 1.5rem;
+}
+.wallet-card {
+  background: var(--primary-gradient);
+  color: var(--text-secondary);
+  padding: 1.2rem;
+  margin: 1rem 0;
+  border-radius: 1.5rem;
+}
+.hide {
+  display: none;
+}
+.bal {
+  display: flex;
+  align-items: center;
+}
+.naira {
+  font-size: 1.5rem;
+}
+.balance h3 {
+  color: var(--text-white);
+}
+.balance p {
+  font-size: 0.9rem;
+}
+.wallet-card-details {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  line-height: 1.6;
+  font-size: 0.9rem;
+}
+.actions {
+  margin-top: 3rem;
+}
+.actions .btn-add {
+  background: var(--primary-black);
+  color: var(--text-white);
+  border: none;
+  padding: 0.8rem 1rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.quick-actions {
+  align-items: center;
+  gap: 1rem;
+}
+.action-btn {
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+.action-btn i {
+  font-size: 2rem;
+  background: var(--bg-surface-light);
+  padding: 1rem 1.3rem;
+  border-radius: 1rem;
+}
+.action-btn span {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+.transactions {
+  margin: 1rem 0;
+}
+.transactions header {
+  margin-bottom: 1rem;
+}
+.transactions header h3 {
+  color: var(--text-primary);
+}
+.transactions header a {
+  color: var(--text-link);
+  font-size: 1rem;
+  font-weight: 900;
+  text-decoration: none;
+}
+.transaction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.transaction {
+  list-style: none;
+  background: var(--bg-surface-light);
+  border-radius: 0.8rem;
+  padding: 0.5rem 1rem;
+}
+.trans-info,
+.amount {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  line-height: 1.4;
+}
+.amount {
+  align-items: flex-end;
+}
+.bold {
+  font-weight: 900;
+}
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: var(--bg-body);
+  padding: 0.8rem 1.5rem;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+}
+.bottom-nav i {
+  font-size: 1.5rem;
+}
+.nav-item {
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.active {
+  color: var(--text-primary);
+}
