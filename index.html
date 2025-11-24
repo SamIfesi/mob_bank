@@ -7,141 +7,42 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.35.0/tabler-icons.min.css"
     />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="shortcut icon" href="/assets/favicon.svg" type="image/svg" />
     <link rel="stylesheet" href="style.css" />
-    <title>MyBank Dashboard</title>
+    <title>Login</title>
   </head>
-
   <body>
-    <header class="flex-space">
-      <div class="topbar-left">
-        <h2>Hi, Sam</h2>
-        <p>How are you today?</p>
-      </div>
-
-      <div class="topbar-right">
-        <button class="reward">
-          <i class="ti ti-gift"></i>
-          <span>Reward</span>
-        </button>
-        <button class="notifications">
-          <i class="ti ti-bell"></i>
-        </button>
-      </div>
-    </header>
-
-    <section class="wallet-card card-purple">
-      <div class="flex-space">
-        <div class="balance">
-          <h3 class="bal">
-            ₦16,567.00
-          </h3>
-          <p class="bal-change">+3.50% from last month</p>
+    <main>
+      <img src="/assets/logo-stacked.svg" alt="" class="logo" />
+      <form action="">
+        <div class="form-group">
+          <i class="ti ti-user"></i>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter username"
+            required
+          />
         </div>
-        <span class="view-bal">
-          <i class="ti ti-eye hide"></i>
-          <i class="ti ti-eye-off"></i>
-        </span>
-      </div>
-
-      <div class="actions flex-space">
-        <div class="wallet-card-details">
-          <span>Number<p>**** 1214</p></span>
-          <span>Exp<p>02/15</p></span>
+        <span class="error" id="user-error"></span>
+        <div class="form-group">
+          <i class="ti ti-eye" id="psdShow"></i>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter password"
+            required
+          />
         </div>
+        <span class="error" id="password-error"></span>
 
-        <button class="btn-add">Add Money</button>
-      </div>
-    </section>
-
-    <nav class="quick-actions flex-space">
-      <button class="action-btn">
-        <i class="ti ti-sort-ascending"></i>
-        <span>Send</span>
-      </button>
-      <button class="action-btn">
-        <i class="ti ti-sort-descending"></i>
-        <span>Receive</span>
-      </button>
-      <button class="action-btn">
-        <i class="ti ti-archive"></i>
-        <span>Withdraw</span>
-      </button>
-      <button class="action-btn">
-        <i class="ti ti-category-plus"></i>
-        <span>More</span>
-      </button>
-    </nav>
-
-    <section class="transactions">
-      <header class="flex-space">
-        <h3>Transactions</h3>
-        <a href="#">See All</a>
-      </header>
-      <ul class="transaction-list">
-        <li class="transaction flex-space">
-          <div class="trans-info">
-            <span class="trans-name bold">Top Up</span>
-            <span class="trans-time">Today 1:53 PM</span>
-          </div>
-          <div class="amount">
-            <span class="trans-amount bold"> +₦1000.00</span>
-            <span class="trans-type">Deposit</span>
-          </div>
-        </li>
-        <li class="transaction flex-space">
-          <div class="trans-info">
-            <span class="trans-name bold">Transfer</span>
-            <span class="trans-time">Today 2:33 PM</span>
-          </div>
-          <div class="amount">
-            <span class="trans-amount bold"> +₦5000.00</span>
-            <span class="trans-type">Send</span>
-          </div>
-        </li>
-        <li class="transaction flex-space">
-          <div class="trans-info">
-            <span class="trans-name bold">Received</span>
-            <span class="trans-time">Today 3:32 PM</span>
-          </div>
-          <div class="amount">
-            <span class="trans-amount bold">+₦500.00</span>
-            <span class="trans-type">Deposit</span>
-          </div>
-        </li>
-        <li class="transaction flex-space">
-          <div class="trans-info">
-            <span class="trans-name bold">Top Up</span>
-            <span class="trans-time">Jan 15, 5:15 AM</span>
-          </div>
-          <div class="amount">
-            <span class="trans-amount bold">+₦20,000.00</span>
-            <span class="trans-type">Deposit</span>
-          </div>
-        </li>
-      </ul>
-    </section>
-
-    <nav class="bottom-nav">
-      <a href="#" class="nav-item active">
-        <i class="ti ti-home"></i>
-        <span>Home</span>
-      </a>
-      <a href="#" class="nav-item">
-        <i class="ti ti-logs"></i>
-        <span>Activity</span>
-      </a>
-      <a href="#" class="nav-item">
-        <i class="ti ti-credit-card"></i>
-        <span>Card</span>
-      </a>
-      <a href="#" class="nav-item">
-        <i class="ti ti-user"></i>
-        <span>Profile</span>
-      </a>
-    </nav>
+        <button type="submit" id="login">Login</button>
+        <button type="submit" id="register">Register</button>
+      </form>
+    </main>
+    <span class="msg" id="msg"></span>
+    <script type="module" src="main.js"></script>
   </body>
 </html>

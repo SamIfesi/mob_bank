@@ -1,0 +1,36 @@
+<svg
+  width="200"
+  height="130"
+  viewBox="0 0 200 130"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <linearGradient id="bagGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#5200a3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2a0054;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <g transform="translate(70, 0)">
+    <path
+      d="M50 22C50 10 42 4 30 4C18 4 10 10 10 22V42L30 58L50 42V22Z"
+      fill="url(#bagGradient)"
+    />
+    <rect x="26" y="22" width="8" height="20" fill="#FF8C00" />
+    <rect x="18" y="28" width="8" height="14" fill="#FF8C00" />
+    <rect x="34" y="28" width="8" height="14" fill="#FF8C00" />
+  </g>
+
+  <text
+    x="100"
+    y="95"
+    text-anchor="middle"
+    font-weight="bold"
+    font-family="Inter"
+    font-size="2rem"
+    fill="#5200a3"
+    letter-spacing="-0.5"
+  >
+    D'Bag Bank
+  </text>
+</svg>
