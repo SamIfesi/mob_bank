@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.35.0/tabler-icons.min.css"
+    />
+    <link rel="shortcut icon" href="/assets/favicon.svg" type="image/svg" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Login</title>
+  </head>
+  <body>
+    <main class="sign-in-main">
+      <img src="/assets/logo-stacked.svg" alt="" class="logo" />
+      <form action="">
+        <div class="form-group">
+          <i class="ti ti-mail"></i>
+          <input
+            type="text"
+            id="email"
+            name="email"
+            placeholder="Enter email"
+            required
+          />
+        </div>
+        <span class="error" id="email-error"></span>
+        <div class="form-group">
+          <i class="ti ti-user-edit"></i>
+          <input
+            type="text"
+            id="fullname"
+            name="fullname"
+            placeholder="Enter fullname"
+            required
+          />
+        </div>
+        <span class="error" id="fullname-error"></span>
+        <div class="form-group">
+          <i class="ti ti-user"></i>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter username"
+            required
+          />
+        </div>
+        <span class="error" id="user-error"></span>
+        <div class="form-group">
+          <i class="ti ti-eye" id="psdShow"></i>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter password"
+            required
+          />
+        </div>
+        <span class="error" id="password-error"></span>
+
+        <button type="submit" id="login">Sign Up</button>
+        <p class="alt-login">Already have an account? <a href="index.html">Login here</a></p>
+      </form>
+    </main>
+    <span class="msg" id="msg"></span>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
