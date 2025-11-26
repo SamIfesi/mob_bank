@@ -11,11 +11,15 @@ const psdShow = id("psdShow");
 const msgSuccess = id("msg");
 const userMsg = id("user-error");
 const pwdMsg = id("password-error");
+const balanceEl = id("bal");
+const toggleBal = id("toggleBal");
+const eyeOpen = id("bal-eye");
+const eyeClosed = id("bal-eye-off");
 
 if (regBtn) {
   regBtn.addEventListener("click", function (e) {
     e.preventDefault();
-    window.location.href = "register.html";
+    window.location.href = "/components/register.html";
   });
 }
 
@@ -81,7 +85,7 @@ if (logBtn) {
       msgSuccess.innerText = `Welcome back, ${userValue}!`;
 
       setTimeout(() => {
-        window.location.href = "home.html";
+        window.location.href = "/components/home.html";
       }, 2000);
     }, 1500);
     username.value = "";
@@ -95,11 +99,6 @@ if (user) {
   const userValue = sessionStorage.getItem("username");
   user.innerText = userValue;
 }
-
-const balanceEl = id("bal");
-const toggleBal = id("toggleBal");
-const eyeOpen = toggleBal.querySelector(".ti-eye");
-const eyeClosed = toggleBal.querySelector(".ti-eye-off");
 
 // Store the original balance text
 const originalBalance = balanceEl.textContent;
@@ -138,27 +137,27 @@ const sendBtn = id("sendBtn");
 if (sendBtn) {
   sendBtn.addEventListener("click", () => {
     console.log(`Hello user you just click send`);
-    window.location.href = "send.html";
+    window.location.href = "/components/send.html";
   });
 }
 const receiveBtn = id("receiveBtn");
 if (receiveBtn) {
   receiveBtn.addEventListener("click", () => {
     console.log(`Hello user you just click receive`);
-    window.location.href = "receive.html";
+    window.location.href = "/components/receive.html";
   });
 }
 const withdrawBtn = id("withdrawBtn");
 if (withdrawBtn) {
   withdrawBtn.addEventListener("click", () => {
     console.log(`Hello user you just click withdraw`);
-    window.location.href = "withdraw.html";
+    window.location.href = "/components/withdraw.html";
   });
 }
 const moreBtn = id("moreBtn");
 if (moreBtn) {
   moreBtn.addEventListener("click", () => {
     console.log(`Hello user you just click more`);
-    window.location.href = "more.html";
+    window.location.href = "/components/more.html";
   });
 }

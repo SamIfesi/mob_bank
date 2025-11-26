@@ -7,7 +7,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.35.0/tabler-icons.min.css"
     />
-    <link rel="stylesheet" href="home.css" />
+    <link rel="stylesheet" href="/src/home.css" />
     <title>MyBank Dashboard</title>
   </head>
 
@@ -36,8 +36,8 @@
           <p class="bal-change">+3.50% from last month</p>
         </div>
         <span class="view-bal" id="toggleBal">
-          <i class="ti ti-eye hide"></i>
-          <i class="ti ti-eye-off"></i>
+          <i class="ti ti-eye hide" id="bal-eye"></i>
+          <i class="ti ti-eye-off" id="bal-eye-off"></i>
         </span>
       </div>
 
@@ -143,6 +143,6 @@
         <span>Profile</span>
       </a>
     </nav>
-    <script type="module" src="main.js"></script>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>

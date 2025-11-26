@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.35.0/tabler-icons.min.css"
+    />
+    <link rel="stylesheet" href="/src/send.css" />
+    <title>Send Money - MyBank</title>
+  </head>
+
+  <body>
+    <header class="flex-space">
+      <button class="back-btn" onclick="window.location.href='home.html'">
+        <i class="ti ti-arrow-left"></i>
+      </button>
+      <h2>Send Money</h2>
+      <div></div>
+    </header>
+
+    <main class="send-container">
+      <section class="amount-section">
+        <label for="amount">Amount</label>
+        <div class="amount-input">
+          <span class="currency">₦</span>
+          <input
+            type="number"
+            id="amount"
+            placeholder="0.00"
+            min="0"
+            step="0.01"
+          />
+        </div>
+      </section>
+
+      <section class="recipient-section">
+        <label for="recipient">Recipient</label>
+        <div class="form-group">
+          <i class="ti ti-user"></i>
+          <input
+            type="text"
+            id="recipient"
+            placeholder="Enter account number or username"
+          />
+        </div>
+
+        <label for="bank">Bank</label>
+        <div class="form-group">
+          <i class="ti ti-building-bank"></i>
+          <select id="bank">
+            <option value="">Select Bank</option>
+            <option value="mybank">MyBank</option>
+            <option value="gtbank">GTBank</option>
+            <option value="access">Access Bank</option>
+            <option value="zenith">Zenith Bank</option>
+            <option value="uba">UBA</option>
+            <option value="first">First Bank</option>
+          </select>
+        </div>
+
+        <label for="description">Description (Optional)</label>
+        <div class="form-group">
+          <i class="ti ti-message"></i>
+          <input type="text" id="description" placeholder="What's this for?" />
+        </div>
+      </section>
+
+      <section class="quick-amounts">
+        <p>Quick Select</p>
+        <div class="quick-amount-btns">
+          <button class="quick-btn" data-amount="1000">₦1,000</button>
+          <button class="quick-btn" data-amount="5000">₦5,000</button>
+          <button class="quick-btn" data-amount="10000">₦10,000</button>
+          <button class="quick-btn" data-amount="20000">₦20,000</button>
+        </div>
+      </section>
+
+      <button class="btn-send" id="sendMoneyBtn">
+        <i class="ti ti-send"></i>
+        Send Money
+      </button>
+    </main>
+
+    <span class="msg" id="msg"></span>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
