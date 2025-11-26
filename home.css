@@ -205,3 +205,16 @@ header .topbar-right {
 .active {
   color: var(--text-primary);
 }
+
+@media (min-width : 44rem) {
+  body, .bottom-nav{
+    max-width: 44rem;
+    margin: 0 auto;
+    transform: translateX(25%);
+  }
+  .bottom-nav {
+    transform: translateX(-50%);
+    display: none;
+    left: 50%;
+  }
+}

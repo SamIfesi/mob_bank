@@ -14,7 +14,7 @@
   <body>
     <header class="flex-space">
       <div class="topbar-left">
-        <h2>Hi, Sam</h2>
+        <h2>Hi, <span id="user-name">User</span></h2>
         <p>How are you today?</p>
       </div>
 
@@ -32,12 +32,10 @@
     <section class="wallet-card card-purple">
       <div class="flex-space">
         <div class="balance">
-          <h3 class="bal">
-            ₦16,567.00
-          </h3>
+          <h3 class="bal" id="bal">₦16,567.00</h3>
           <p class="bal-change">+3.50% from last month</p>
         </div>
-        <span class="view-bal">
+        <span class="view-bal" id="toggleBal">
           <i class="ti ti-eye hide"></i>
           <i class="ti ti-eye-off"></i>
         </span>
@@ -45,8 +43,14 @@
 
       <div class="actions flex-space">
         <div class="wallet-card-details">
-          <span>Number<p>**** 1214</p></span>
-          <span>Exp<p>02/15</p></span>
+          <span
+            >Number
+            <p>**** 1214</p></span
+          >
+          <span
+            >Exp
+            <p>02/15</p></span
+          >
         </div>
 
         <button class="btn-add">Add Money</button>
@@ -54,19 +58,19 @@
     </section>
 
     <nav class="quick-actions flex-space">
-      <button class="action-btn">
+      <button class="action-btn" id="sendBtn">
         <i class="ti ti-sort-ascending"></i>
         <span>Send</span>
       </button>
-      <button class="action-btn">
+      <button class="action-btn" id="receiveBtn">
         <i class="ti ti-sort-descending"></i>
         <span>Receive</span>
       </button>
-      <button class="action-btn">
+      <button class="action-btn" id="withdrawBtn">
         <i class="ti ti-archive"></i>
         <span>Withdraw</span>
       </button>
-      <button class="action-btn">
+      <button class="action-btn" id="moreBtn">
         <i class="ti ti-category-plus"></i>
         <span>More</span>
       </button>

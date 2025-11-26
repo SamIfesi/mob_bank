@@ -60,12 +60,6 @@ main {
   align-items: center;
   width: 100%;
 }
-.login-main {
-  transform: translateY(20%);
-}
-.sign-in-main {
-  transform: translateY(5%);
-}
 form {
   padding: 0.5rem;
   width: 100%;
