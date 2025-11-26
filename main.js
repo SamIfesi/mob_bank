@@ -103,6 +103,17 @@ const eyeClosed = toggleBal.querySelector(".ti-eye-off");
 
 // Store the original balance text
 const originalBalance = balanceEl.textContent;
+// Check sessionStorage for saved state of the Balance
+let savedState = sessionStorage.getItem("balanceState");
+if (savedState === "hidden") {
+  balanceEl.textContent = "****** . **";
+  eyeOpen.classList.remove("hide");
+  eyeClosed.classList.add("hide");
+}else {
+  balanceEl.textContent = originalBalance;
+  eyeOpen.classList.add("hide");
+  eyeClosed.classList.remove("hide");
+}
 
 if (toggleBal) {
   toggleBal.addEventListener("click", () => {
@@ -111,11 +122,13 @@ if (toggleBal) {
       balanceEl.textContent = "****** . **";
       eyeOpen.classList.remove("hide");
       eyeClosed.classList.add("hide");
+      sessionStorage.setItem("balanceState", "hidden");
     } else {
       // Show balance
       balanceEl.textContent = originalBalance;
       eyeOpen.classList.add("hide");
       eyeClosed.classList.remove("hide");
+      sessionStorage.setItem("balanceState", "visible");
     }
   });
 }
