@@ -101,17 +101,19 @@ if (user) {
 }
 
 // Store the original balance text
-const originalBalance = balanceEl.textContent;
-// Check sessionStorage for saved state of the Balance
-let savedState = sessionStorage.getItem("balanceState");
-if (savedState === "hidden") {
-  balanceEl.textContent = "****** . **";
-  eyeOpen.classList.remove("hide");
-  eyeClosed.classList.add("hide");
-}else {
-  balanceEl.textContent = originalBalance;
-  eyeOpen.classList.add("hide");
-  eyeClosed.classList.remove("hide");
+if (balanceEl) {
+  const originalBalance = balanceEl.textContent;
+  // Check sessionStorage for saved state of the Balance
+  let savedState = sessionStorage.getItem("balanceState");
+  if (savedState === "hidden") {
+    balanceEl.textContent = "****** . **";
+    eyeOpen.classList.remove("hide");
+    eyeClosed.classList.add("hide");
+  } else {
+    balanceEl.textContent = originalBalance;
+    eyeOpen.classList.add("hide");
+    eyeClosed.classList.remove("hide");
+  }
 }
 
 if (toggleBal) {
