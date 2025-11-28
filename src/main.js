@@ -1,6 +1,6 @@
-import "./send.css";
-import "./home.css";
 import "./style.css";
+import "./home.css";
+import "./send.css";
 const id = (id) => document.getElementById(id);
 const qa = (s) => document.querySelectorAll(s);
 const q = (s) => document.querySelector(s);
@@ -28,14 +28,14 @@ const msg = id("msg");
 if (backBtn) {
   backBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    window.location.href = "/components/home.html";
+    window.location.href = "/pages/home.html";
   });
 }
 
 if (regBtn) {
   regBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    window.location.href = "/components/register.html";
+    window.location.href = "/pages/register.html";
   });
 }
 
@@ -100,7 +100,7 @@ if (logBtn) {
       msgSuccess.innerText = `Welcome back, ${userValue}!`;
 
       setTimeout(() => {
-        window.location.href = "/components/home.html";
+        window.location.href = "/pages/home.html";
       }, 2000);
     }, 1500);
     username.value = "";
@@ -153,25 +153,25 @@ if (toggleBal) {
 if (sendBtn) {
   sendBtn.addEventListener("click", () => {
     console.log(`Hello user you just click send`);
-    window.location.href = "/components/send.html";
+    window.location.href = "/pages/send.html";
   });
 }
 if (receiveBtn) {
   receiveBtn.addEventListener("click", () => {
     console.log(`Hello user you just click receive`);
-    window.location.href = "/components/receive.html";
+    window.location.href = "/pages/receive.html";
   });
 }
 if (withdrawBtn) {
   withdrawBtn.addEventListener("click", () => {
     console.log(`Hello user you just click withdraw`);
-    window.location.href = "/components/withdraw.html";
+    window.location.href = "/pages/withdraw.html";
   });
 }
 if (moreBtn) {
   moreBtn.addEventListener("click", () => {
     console.log(`Hello user you just click more`);
-    window.location.href = "/components/more.html";
+    window.location.href = "/pages/more.html";
   });
 }
 
@@ -202,7 +202,7 @@ function checkAuth() {
   // Get current page path
   const currentPage = window.location.pathname;
 
-  const publicPages = ["/", "/index.html", "/components/register.html"];
+  const publicPages = ["/", "/index.html", "/pages/register.html"];
 
   if ((!username || !password) && !publicPages.includes(currentPage)) {
     window.location.href = "/index.html";
