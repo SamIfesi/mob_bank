@@ -1,11 +1,10 @@
-import './send.css';
-import './home.css';
-import './style.css';
+import "./send.css";
+import "./home.css";
+import "./style.css";
 const id = (id) => document.getElementById(id);
 const qa = (s) => document.querySelectorAll(s);
 const q = (s) => document.querySelector(s);
 
-const form = q("form");
 const regBtn = id("register");
 const logBtn = id("login");
 const username = id("username");
@@ -19,9 +18,15 @@ const toggleBal = id("toggleBal");
 const eyeOpen = id("bal-eye");
 const eyeClosed = id("bal-eye-off");
 const backBtn = id("backBtn");
+const sendBtn = id("sendBtn");
+const receiveBtn = id("receiveBtn");
+const withdrawBtn = id("withdrawBtn");
+const moreBtn = id("moreBtn");
+const recipientInput = id("recipient");
+const msg = id("msg");
 
 if (backBtn) {
-  backBtn.addEventListener("click", (e)=>{
+  backBtn.addEventListener("click", (e) => {
     e.preventDefault();
     window.location.href = "/components/home.html";
   });
@@ -37,17 +42,16 @@ if (regBtn) {
 if (psdShow) {
   psdShow.addEventListener("click", (e) => {
     const eye = e.target;
-    if (eye.classList.contains("ti-eye")) {
-      eye.classList.remove("ti-eye");
-      eye.classList.add("ti-eye-off");
-      if (password.type === "password") {
-        password.type = "text";
-      } else {
-        password.type = "password";
-      }
+    if (
+      eye.classList.contains("ti-eye") &&
+      !eye.classList.contains("ti-eye-off") &&
+      password.type === "password"
+    ) {
+      eye.classList.replace("ti-eye", "ti-eye-off");
+      password.type = "text";
     } else {
-      eye.classList.remove("ti-eye-off");
-      eye.classList.add("ti-eye");
+      eye.classList.replace("ti-eye-off", "ti-eye");
+      password.type = "password";
     }
   });
 }
@@ -146,28 +150,24 @@ if (toggleBal) {
 }
 
 // home.js navigation
-const sendBtn = id("sendBtn");
 if (sendBtn) {
   sendBtn.addEventListener("click", () => {
     console.log(`Hello user you just click send`);
     window.location.href = "/components/send.html";
   });
 }
-const receiveBtn = id("receiveBtn");
 if (receiveBtn) {
   receiveBtn.addEventListener("click", () => {
     console.log(`Hello user you just click receive`);
     window.location.href = "/components/receive.html";
   });
 }
-const withdrawBtn = id("withdrawBtn");
 if (withdrawBtn) {
   withdrawBtn.addEventListener("click", () => {
     console.log(`Hello user you just click withdraw`);
     window.location.href = "/components/withdraw.html";
   });
 }
-const moreBtn = id("moreBtn");
 if (moreBtn) {
   moreBtn.addEventListener("click", () => {
     console.log(`Hello user you just click more`);
@@ -185,10 +185,6 @@ if (quickAmountBtns) {
     });
   });
 }
-const recipientInput = id("recipient");
-const msg = id("msg");
-
-console.log(recipientInput, msg);
 
 recipientInput.addEventListener("input", () => {
   if (recipientInput.value.length < 10) {
@@ -197,3 +193,19 @@ recipientInput.addEventListener("input", () => {
     msg.textContent = "";
   }
 });
+
+// Check if user is authenticated
+function checkAuth() {
+  const username = sessionStorage.getItem("username");
+  const password = sessionStorage.getItem("password");
+
+  // Get current page path
+  const currentPage = window.location.pathname;
+
+  const publicPages = ["/", "/index.html", "/components/register.html"];
+
+  if ((!username || !password) && !publicPages.includes(currentPage)) {
+    window.location.href = "/index.html";
+  }
+}
+checkAuth();
