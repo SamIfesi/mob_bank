@@ -115,7 +115,7 @@ form {
   overflow: hidden;
   transition: max-height 0.3s ease;
 }
-.msg {
+.msg-success {
   position: absolute;
   bottom: 1rem;
   left: 50%;
