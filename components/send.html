@@ -3,30 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.35.0/tabler-icons.min.css"
-    />
-    <link rel="stylesheet" href="/src/send.css" />
+    <link rel="shortcut icon" href="/favicon.svg" type="image/svg" />
     <title>Send Money - MyBank</title>
   </head>
 
-  <body>
-    <header class="flex-space">
-      <button class="back-btn" onclick="window.location.href='home.html'">
-        <i class="ti ti-arrow-left"></i>
+  <body class="send-body">
+    <header class="send-header">
+      <button class="back-btn" id="backBtn">
+        <i class="ti ti-chevron-left"></i>
       </button>
       <h2>Send Money</h2>
       <div></div>
     </header>
 
     <main class="send-container">
-      <section class="amount-section">
+      <section class="section">
         <label for="amount">Amount</label>
-        <div class="amount-input">
-          <span class="currency">₦</span>
+        <div class="input-group">
+          <span class="send-icon">₦</span>
           <input
             type="number"
+            class="input"
             id="amount"
             placeholder="0.00"
             min="0"
@@ -35,21 +32,24 @@
         </div>
       </section>
 
-      <section class="recipient-section">
+      <section class="section">
         <label for="recipient">Recipient</label>
-        <div class="form-group">
-          <i class="ti ti-user"></i>
+        <div class="input-group">
+          <i class="ti ti-user send-icon"></i>
           <input
             type="text"
+            class="input"
             id="recipient"
-            placeholder="Enter account number or username"
+            placeholder="Enter 10-digit Account No."
           />
         </div>
+      </section>
 
+      <section class="section">
         <label for="bank">Bank</label>
-        <div class="form-group">
-          <i class="ti ti-building-bank"></i>
-          <select id="bank">
+        <div class="input-group">
+          <i class="ti ti-building-bank send-icon"></i>
+          <select id="bank" class="input">
             <option value="">Select Bank</option>
             <option value="mybank">MyBank</option>
             <option value="gtbank">GTBank</option>
@@ -59,22 +59,20 @@
             <option value="first">First Bank</option>
           </select>
         </div>
+      </section>
 
+      <section class="section">
         <label for="description">Description (Optional)</label>
-        <div class="form-group">
-          <i class="ti ti-message"></i>
-          <input type="text" id="description" placeholder="What's this for?" />
-        </div>
+          <input type="text" id="description" placeholder="What's this for?" class="form-grp"/>
       </section>
 
       <section class="quick-amounts">
-        <p>Quick Select</p>
-        <div class="quick-amount-btns">
+          <button class="quick-btn" data-amount="500">₦500</button>
           <button class="quick-btn" data-amount="1000">₦1,000</button>
+          <button class="quick-btn" data-amount="2000">₦2,000</button>
           <button class="quick-btn" data-amount="5000">₦5,000</button>
           <button class="quick-btn" data-amount="10000">₦10,000</button>
           <button class="quick-btn" data-amount="20000">₦20,000</button>
-        </div>
       </section>
 
       <button class="btn-send" id="sendMoneyBtn">
@@ -84,6 +82,6 @@
     </main>
 
     <span class="msg" id="msg"></span>
-    <script type="module" src="main.js"></script>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>

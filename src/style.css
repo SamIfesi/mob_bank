@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Stack+Sans+Text:wght@200..700&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.35.0/tabler-icons.min.css");
 :root {
   /* The card has a slight gradient, here is a close approximation */
   --primary-gradient: linear-gradient(135deg, #5200a3 0%, #2a0054 100%);
@@ -6,6 +7,7 @@
   --green-light: #6dc474;
   /* --- Text Colors --- */
   /* Main headings (e.g., "Hi, John!", "$16,567.00") */
+  --text-gray: #807b7b;
   --text-primary: #000000;
   /* Subtitles and labels (e.g., "How are you today?", "Number") */
   --text-secondary: #8a8a8f;
@@ -41,7 +43,7 @@
   scroll-behavior: smooth;
   -webkit-tap-highlight-color: transparent;
 }
-body {
+.body {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,7 +52,7 @@ body {
   padding: 1.5rem;
 }
 .form-group,
-button {
+.btn-submit {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 main {
@@ -70,7 +72,7 @@ form {
   border-radius: 2rem;
   overflow: hidden;
 }
-i {
+.icon {
   color: var(--text-secondary);
   font-size: 1.2rem;
   position: absolute;
@@ -78,18 +80,18 @@ i {
   right: 1.5rem;
   transform: translateY(-50%);
 }
-input {
+.input-form {
   width: 100%;
   padding: 1rem 1.3rem;
   border: transparent;
   outline: transparent;
   font-size: 1rem;
 }
-input::placeholder {
+.input-form::placeholder {
   color: var(--text-secondary);
   font-style: italic;
 }
-button {
+.btn-submit {
   width: 100%;
   background: var(--primary-gradient);
   color: var(--text-white);

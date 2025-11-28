@@ -5,20 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.35.0/tabler-icons.min.css"
+      href=""
     />
-    <link rel="shortcut icon" href="/assets/favicon.svg" type="image/svg" />
-    <link rel="stylesheet" href="/src/style.css" />
+    <link rel="shortcut icon" href="/favicon.svg" type="image/svg" />
     <title>Login</title>
   </head>
-  <body>
+  <body class="body">
     <main>
-      <img src="/assets/logo-stacked.svg" alt="" class="logo" />
+      <img src="/logo-stacked.svg" alt="" class="logo" />
       <form action="">
         <div class="form-group">
-          <i class="ti ti-user"></i>
+          <i class="ti ti-user icon"></i>
           <input
             type="text"
+            class="input-form"
             id="username"
             name="username"
             placeholder="Enter username"
@@ -27,9 +27,10 @@
         </div>
         <span class="error" id="user-error"></span>
         <div class="form-group">
-          <i class="ti ti-eye" id="psdShow"></i>
+          <i class="ti ti-eye icon" id="psdShow"></i>
           <input
             type="password"
+            class="input-form"
             id="password"
             name="password"
             placeholder="Enter password"
@@ -38,8 +39,8 @@
         </div>
         <span class="error" id="password-error"></span>
 
-        <button type="submit" id="login">Login</button>
-        <button type="submit" id="register">Register</button>
+        <button type="submit" id="login" class="btn-submit">Login</button>
+        <button type="submit" id="register" class="btn-submit">Register</button>
       </form>
     </main>
     <span class="msg" id="msg"></span>

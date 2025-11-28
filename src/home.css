@@ -1,30 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Stack+Sans+Text:wght@200..700&display=swap');
-:root {
-  --primary-gradient: linear-gradient(135deg, #5200a3 0%, #2a0054 100%);
-  --primary-black: #121212;
-  --green-light: #6dc474;
-  --text-primary: #000000;
-  --text-secondary: #8a8a8f;
-  --text-white: #f2f4f8;
-  --text-link: #1a56c4;
-  --bg-body: #fafafa;
-  --bg-surface-light: #f2f4f8;
-  --color-success: #2e7d32;
-  --bg-success-light: #e8f5e9;
-  --color-danger: #c62828;
-  --bg-danger-light: #ffebee;
-  --color-info: #00bcd4;
-  --bg-info-light: #e0f7fa;
-}
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Stack Sans Text", 'Inter';
-  scroll-behavior: smooth;
-  -webkit-tap-highlight-color: transparent;
-}
-body {
+.home-body {
   padding: 1.5rem;
 }
 .flex-space {
@@ -32,20 +6,20 @@ body {
   align-items: flex-start;
   justify-content: space-between;
 }
-header .topbar-left {
+.home-header .topbar-left {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
 }
-header .topbar-left h2 {
+.home-header .topbar-left h2 {
   font-size: 1.5rem;
   color: var(--text-primary);
 }
-header .topbar-left p {
+.home-header .topbar-left p {
   font-size: 0.9rem;
   color: var(--text-secondary);
 }
-header .topbar-right {
+.home-header .topbar-right {
   display: flex;
   align-items: center;
   gap: 0.5rem;

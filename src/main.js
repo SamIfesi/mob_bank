@@ -1,5 +1,8 @@
+import './send.css';
+import './home.css';
+import './style.css';
 const id = (id) => document.getElementById(id);
-const className = (s) => document.getElementsByClassName(s);
+const qa = (s) => document.querySelectorAll(s);
 const q = (s) => document.querySelector(s);
 
 const form = q("form");
@@ -15,9 +18,17 @@ const balanceEl = id("bal");
 const toggleBal = id("toggleBal");
 const eyeOpen = id("bal-eye");
 const eyeClosed = id("bal-eye-off");
+const backBtn = id("backBtn");
+
+if (backBtn) {
+  backBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    window.location.href = "/components/home.html";
+  });
+}
 
 if (regBtn) {
-  regBtn.addEventListener("click", function (e) {
+  regBtn.addEventListener("click", (e) => {
     e.preventDefault();
     window.location.href = "/components/register.html";
   });
@@ -163,3 +174,26 @@ if (moreBtn) {
     window.location.href = "/components/more.html";
   });
 }
+
+// Quick amount buttons in send.html
+const quickAmountBtns = qa(".quick-btn");
+const amountInput = id("amount");
+if (quickAmountBtns) {
+  quickAmountBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      amountInput.value = btn.dataset.amount;
+    });
+  });
+}
+const recipientInput = id("recipient");
+const msg = id("msg");
+
+console.log(recipientInput, msg);
+
+recipientInput.addEventListener("input", () => {
+  if (recipientInput.value.length < 10) {
+    msg.textContent = "Recipient account number too short!";
+  } else {
+    msg.textContent = "";
+  }
+});

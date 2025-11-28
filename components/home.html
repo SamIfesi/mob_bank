@@ -3,16 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.35.0/tabler-icons.min.css"
-    />
-    <link rel="stylesheet" href="/src/home.css" />
+    <link rel="shortcut icon" href="/favicon.svg" type="image/svg">
     <title>MyBank Dashboard</title>
   </head>
 
-  <body>
-    <header class="flex-space">
+  <body class="home-body">
+    <header class="home-header flex-space">
       <div class="topbar-left">
         <h2>Hi, <span id="user-name">User</span></h2>
         <p>How are you today?</p>
@@ -58,22 +54,22 @@
     </section>
 
     <nav class="quick-actions flex-space">
-      <button class="action-btn" id="sendBtn">
+      <span class="action-btn" id="sendBtn">
         <i class="ti ti-sort-ascending"></i>
         <span>Send</span>
-      </button>
-      <button class="action-btn" id="receiveBtn">
+      </span>
+      <span class="action-btn" id="receiveBtn">
         <i class="ti ti-sort-descending"></i>
         <span>Receive</span>
-      </button>
-      <button class="action-btn" id="withdrawBtn">
+      </span>
+      <span class="action-btn" id="withdrawBtn">
         <i class="ti ti-archive"></i>
         <span>Withdraw</span>
-      </button>
-      <button class="action-btn" id="moreBtn">
+      </span>
+      <span class="action-btn" id="moreBtn">
         <i class="ti ti-category-plus"></i>
         <span>More</span>
-      </button>
+      </span>
     </nav>
 
     <section class="transactions">
