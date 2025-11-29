@@ -41,7 +41,7 @@
 }
 .reward i,
 .notifications i,
-.view-bal {
+#balShow {
   font-size: 1.5rem;
 }
 .wallet-card {
@@ -181,7 +181,7 @@
 }
 
 @media (min-width : 44rem) {
-  body, .bottom-nav{
+  .home-body, .bottom-nav{
     max-width: 44rem;
     margin: 0 auto;
     transform: translateX(25%);

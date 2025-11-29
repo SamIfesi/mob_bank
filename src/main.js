@@ -1,6 +1,7 @@
 import "./style.css";
 import "./home.css";
 import "./send.css";
+
 const id = (id) => document.getElementById(id);
 const qa = (s) => document.querySelectorAll(s);
 const q = (s) => document.querySelector(s);
@@ -9,14 +10,14 @@ const regBtn = id("register");
 const logBtn = id("login");
 const username = id("username");
 const password = id("password");
+const cfmPassword = id("cfm-password");
 const psdShow = id("psdShow");
+const cfmPsdShow = id("iconCmf-psdShow");
 const msgSuccess = id("msg-success");
 const userMsg = id("user-error");
 const pwdMsg = id("password-error");
-const balanceEl = id("bal");
-const toggleBal = id("toggleBal");
-const eyeOpen = id("bal-eye");
-const eyeClosed = id("bal-eye-off");
+const balance = id("bal");
+const eye = id("balShow");
 const backBtn = id("backBtn");
 const sendBtn = id("sendBtn");
 const receiveBtn = id("receiveBtn");
@@ -24,7 +25,11 @@ const withdrawBtn = id("withdrawBtn");
 const moreBtn = id("moreBtn");
 const recipientInput = id("recipient");
 const msg = id("msg");
+const loader = id("loader");
 
+import "./register.js";
+
+// Navigate back to home page
 if (backBtn) {
   backBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -32,6 +37,7 @@ if (backBtn) {
   });
 }
 
+// Navigate to registration page
 if (regBtn) {
   regBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -39,6 +45,7 @@ if (regBtn) {
   });
 }
 
+// Password show/hide toggle
 if (psdShow) {
   psdShow.addEventListener("click", (e) => {
     const eye = e.target;
@@ -55,7 +62,25 @@ if (psdShow) {
     }
   });
 }
+// Confirm Password show/hide toggle
+if (cfmPsdShow) {
+  cfmPsdShow.addEventListener("click", (e) => {
+    const eye = e.target;
+    if (
+      eye.classList.contains("ti-eye") &&
+      !eye.classList.contains("ti-eye-off") &&
+      cfmPassword.type === "password"
+    ) {
+      eye.classList.replace("ti-eye", "ti-eye-off");
+      cfmPassword.type = "text";
+    } else {
+      eye.classList.replace("ti-eye-off", "ti-eye");
+      cfmPassword.type = "password";
+    }
+  });
+};
 
+// Login form submission
 if (logBtn) {
   logBtn.addEventListener("click", async (e) => {
     e.preventDefault();
@@ -111,39 +136,37 @@ if (logBtn) {
 // For the dashboard
 const user = id("user-name");
 if (user) {
-  const userValue = sessionStorage.getItem("username");
+  const userValue = localStorage.getItem("username");
   user.innerText = userValue;
 }
 
 // Store the original balance text
-if (balanceEl) {
-  const originalBalance = balanceEl.textContent;
-  // Check sessionStorage for saved state of the Balance
+let originalBalance;
+
+if (balance) {
   let savedState = sessionStorage.getItem("balanceState");
+  originalBalance = balance.innerText;
   if (savedState === "hidden") {
-    balanceEl.textContent = "****** . **";
-    eyeOpen.classList.remove("hide");
-    eyeClosed.classList.add("hide");
+    balance.innerText = "****** . **";
+    eye.classList.replace("ti-eye-off", "ti-eye");
   } else {
-    balanceEl.textContent = originalBalance;
-    eyeOpen.classList.add("hide");
-    eyeClosed.classList.remove("hide");
+    balance.innerText = originalBalance;
+    eye.classList.replace("ti-eye", "ti-eye-off");
   }
 }
 
-if (toggleBal) {
-  toggleBal.addEventListener("click", () => {
-    if (balanceEl.textContent === originalBalance) {
+// Balance show/hide toggle
+if (eye) {
+  eye.addEventListener("click", () => {
+    if (balance.innerText === originalBalance) {
       // Hide balance
-      balanceEl.textContent = "****** . **";
-      eyeOpen.classList.remove("hide");
-      eyeClosed.classList.add("hide");
+      balance.innerText = "****** . **";
+      eye.classList.replace("ti-eye-off", "ti-eye");
       sessionStorage.setItem("balanceState", "hidden");
     } else {
       // Show balance
-      balanceEl.textContent = originalBalance;
-      eyeOpen.classList.add("hide");
-      eyeClosed.classList.remove("hide");
+      balance.innerText = originalBalance;
+      eye.classList.replace("ti-eye", "ti-eye-off");
       sessionStorage.setItem("balanceState", "visible");
     }
   });
@@ -186,26 +209,28 @@ if (quickAmountBtns) {
   });
 }
 
-recipientInput.addEventListener("input", () => {
-  if (recipientInput.value.length < 10) {
-    msg.textContent = "Recipient account number too short!";
-  } else {
-    msg.textContent = "";
-  }
-});
+if (recipientInput) {
+  recipientInput.addEventListener("input", () => {
+    if (recipientInput.value.length < 10) {
+      msg.textContent = "Recipient account number too short!";
+    } else {
+      msg.textContent = "";
+    }
+  });
+}
 
 // Check if user is authenticated
-function checkAuth() {
-  const username = sessionStorage.getItem("username");
-  const password = sessionStorage.getItem("password");
+// function checkAuth() {
+//   const username = sessionStorage.getItem("username");
+//   const password = sessionStorage.getItem("password");
 
-  // Get current page path
-  const currentPage = window.location.pathname;
+//   // Get current page path
+//   const currentPage = window.location.pathname;
 
-  const publicPages = ["/", "/index.html", "/pages/register.html"];
+//   const publicPages = ["/", "/index.html", "/pages/register.html"];
 
-  if ((!username || !password) && !publicPages.includes(currentPage)) {
-    window.location.href = "/index.html";
-  }
-}
-checkAuth();
+//   if ((!username || !password) && !publicPages.includes(currentPage)) {
+//     window.location.href = "/index.html";
+//   }
+// }
+// checkAuth();

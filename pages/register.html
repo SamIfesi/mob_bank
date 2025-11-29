@@ -4,24 +4,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="/favicon.svg" type="image/svg" />
-    <title>Register</title>
+    <title>D'Bag Bank - Register</title>
   </head>
   <body class="body">
     <main>
       <img src="/logo-stacked.svg" alt="" class="logo" />
-      <form action="">
+      <div class="loader-container hide" id="loader">
+        <div class="spinner"></div>
+      </div>
+      <!-- Email input form -->
+      <form action="" id="email-form" class="">
+        <i class="ti ti-chevron-left back" id="backLogin"></i>
         <div class="form-group">
           <i class="ti ti-mail icon"></i>
           <input
-            type="email"
+            type="text"
             class="input-form"
             id="email"
             name="email"
             placeholder="Enter email"
-            required
           />
         </div>
         <span class="error" id="email-error"></span>
+
+        <button type="submit" class="btn-submit">Continue</button>
+        <p class="alt-login">
+          Already have an account? <a href="/index.html">Login here</a>
+        </p>
+      </form>
+
+      <!-- Fullname signup form -->
+      <form action="" id="name-form" class="hide">
+        <i class="ti ti-chevron-left back" id="backEmail"></i>
         <div class="form-group">
           <i class="ti ti-user-edit icon"></i>
           <input
@@ -30,7 +44,6 @@
             id="fullname"
             name="fullname"
             placeholder="Enter fullname"
-            required
           />
         </div>
         <span class="error" id="fullname-error"></span>
@@ -42,10 +55,18 @@
             id="username"
             name="username"
             placeholder="Enter username"
-            required
           />
         </div>
         <span class="error" id="user-error"></span>
+        <button type="submit" class="btn-submit">Continue</button>
+        <p class="alt-login">
+          Already have an account? <a href="/index.html">Login here</a>
+        </p>
+      </form>
+
+      <!-- Password signup form -->
+      <form action="" id="password-form" class="hide">
+        <i class="ti ti-chevron-left back" id="backName"></i>
         <div class="form-group">
           <i class="ti ti-eye icon" id="psdShow"></i>
           <input
@@ -53,14 +74,43 @@
             class="input-form"
             id="password"
             name="password"
-            placeholder="Enter password"
-            required
+            placeholder="Create your password"
           />
         </div>
-        <span class="error" id="password-error"></span>
+        <div class="check-container">
+          <li class="psd-check">Minimum 8 characters</li>
+          <li class="psd-check">1 uppercase character</li>
+          <li class="psd-check">1 lowercase character</li>
+          <li class="psd-check">1 number character</li>
+          <li class="psd-check">Atleast 1 special character</li>
+          <span class="error" id="password-error"></span>
+        </div>
 
-        <button type="submit" id="login" class="btn-submit">Sign Up</button>
-        <p class="alt-login">Already have an account? <a href="/index.html">Login here</a></p>
+        <button type="submit" class="btn-submit">Continue</button>
+        <p class="alt-login">
+          Already have an account? <a href="/index.html">Login here</a>
+        </p>
+      </form>
+
+      <!-- Confirm Password signup form -->
+      <form action="" id="confirm-Pswd-form" class="hide">
+        <i class="ti ti-chevron-left back" id="backPsd"></i>
+        <div class="form-group">
+          <i class="ti ti-eye icon" id="iconCmf-psdShow"></i>
+          <input
+            type="password"
+            class="input-form"
+            id="cfm-password"
+            name="confirm-password"
+            placeholder="Confirm password"
+          />
+        </div>
+        <span class="error" id="cfm-psd-error"></span>
+
+        <button type="submit" class="btn-submit">Register</button>
+        <p class="alt-login">
+          Already have an account? <a href="/index.html">Login here</a>
+        </p>
       </form>
     </main>
     <span class="msg-success" id="msg-success"></span>
