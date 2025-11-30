@@ -258,17 +258,32 @@ async function registerUsers() {
         confirmPswdform.classList.add("hide");
         loader.classList.remove("hide");
 
-        const storedEmail = localStorage.getItem("email"); 
+        const userDB = JSON.parse(localStorage.getItem("userDatabase")) || [];
+        const emailTaken = userDB.some((user) => user.email === email.value.toLowerCase());
 
-        if (storedEmail.toLowerCase() === email.value.toLowerCase()) {
-          
+        if (emailTaken) {
           cfmPwdMsg.classList.add("showMsg");
-          cfmPwdMsg.innerText = "This Email already has an account. Please Login.";
+          cfmPwdMsg.innerText =
+            "This Email already has an account. Please Login.";
+
           loader.classList.add("hide");
-          confirmPswdform.classList.remove("hide"); 
+          confirmPswdform.classList.remove("hide");
         } else {
           msgSuccess.innerText = "Creating your Account in a moment";
           setTimeout(() => {
+            const newUser = {
+              email: localStorage.getItem("email"),
+              fullname: localStorage.getItem("fullname"),
+              username: localStorage.getItem("username"),
+              password: localStorage.getItem("password")
+            }
+            userDB.push(newUser);
+            localStorage.setItem("userDatabase", JSON.stringify(userDB));
+
+            localStorage.removeItem("email");
+            localStorage.removeItem("fullname");
+            localStorage.removeItem("password");
+
             msgSuccess.innerText = "Account created successfully!";
             setTimeout(() => {
               loader.classList.add("hide");
@@ -296,10 +311,10 @@ if (backPsd) {
 if (backName) {
   backName.addEventListener("click", () => {
     loader.classList.remove("hide");
-    confirmPswdform.classList.add("hide");
+    passwordform.classList.add("hide");
     setTimeout(() => {
       loader.classList.add("hide");
-      passwordform.classList.remove("hide");
+      nameform.classList.remove("hide");
     }, 2000);
   });
 }
