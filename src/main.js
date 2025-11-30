@@ -181,7 +181,7 @@ if (recipientInput) {
 }
 // Check if user is authenticated
 function checkAuth() {
-  const userDetail = JSON.parse(sessionStorage.getItem("tempUser"));
+  const userDetail = JSON.parse(localStorage.getItem("tempUser"));
   const user = userDetail ? userDetail.password && userDetail.username : null;
 
   // Get current page path
@@ -195,7 +195,51 @@ function checkAuth() {
 }
 checkAuth();
 
-async function loginUsers() {
+const loginData = {};
+
+// get users from server
+async function getUser(data) {
+  const url = "";
+  try {
+    loader.classList.remove("hide");
+    msgSuccess.textContent = "Verifyind Credentials...";
+    passwordform.classList.add("hide");
+    pwdMsg.textContent = "";
+    pwdMsg.classList.remove("showMsg");
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if(!response.ok){
+      const errorData = await response.json();
+      throw new Error(
+        errorData.message || "Invalid credentials or server error."
+      );
+    }
+
+    const result = await response.json();
+    if (response.status === 200){
+      const usernameDisplay = result.username || data.username;
+      sessionStorage.setItem("username", usernameDisplay);
+      msgSuccess.textContent = `Welcome back ${usernameDisplay}!`;
+      setTimeout(() => {
+        // window.location.href = "/pages/home.html";
+        loader.classList.add("hide");
+      }, 2000);
+    }
+  } catch (error) {
+    loader.classList.add("hide");
+    msgSuccess.innerText = "";
+    pswdLoginForm.classList.remove("hide");
+    pwdMsg.classList.add("showMsg");
+    pwdMsg.textContent = error.message;
+  }
+}
+
+function loginUsers() {
   // Username form for Login
   if (userLoginForm) {
     userLoginForm.addEventListener("submit", (e) => {
@@ -207,15 +251,9 @@ async function loginUsers() {
       userMsg.textContent = "";
       userMsg.classList.remove("showMsg");
 
-      // Get userDatabase from localStorage
-      const userDB = JSON.parse(localStorage.getItem("userDatabase")) || [];
-
-      // Check if username exists in the database
-      const userExists = userDB.find((user) => user.username === usernameValue);
-
       const validation = [
         {
-          condition: usernameValue === "",
+          condition: usernameValue.length === 0,
           message: "Username is required",
           element: userMsg,
         },
@@ -241,15 +279,12 @@ async function loginUsers() {
       }
 
       if (valid) {
+        loginData.username = usernameValue;
         userMsg.textContent = "";
         userMsg.classList.remove("showMsg");
-        console.log("Username form is valid");
+
         userLoginForm.classList.add("hide");
         loader.classList.remove("hide");
-
-        // Store the matched user data for password verification
-        sessionStorage.setItem("tempUser", JSON.stringify(userExists));
-
         setTimeout(() => {
           loader.classList.add("hide");
           pswdLoginForm.classList.remove("hide");
@@ -262,8 +297,6 @@ async function loginUsers() {
     pswdLoginForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const pswdValue = password.value;
-      const pswdMatchedUser = JSON.parse(sessionStorage.getItem("tempUser"));
-      const matchedPassword = pswdMatchedUser ? pswdMatchedUser.password : null;
 
       let valid = true;
       pwdMsg.textContent = "";
@@ -273,11 +306,6 @@ async function loginUsers() {
         {
           condition: pswdValue === "",
           message: "Password is required",
-          element: pwdMsg,
-        },
-        {
-          condition: pswdValue !== "" && pswdValue !== matchedPassword,
-          message: "Password does not match.",
           element: pwdMsg,
         },
       ];
@@ -292,22 +320,8 @@ async function loginUsers() {
       }
 
       if (valid) {
-        pwdMsg.textContent = "";
-        pwdMsg.classList.remove("showMsg");
-        console.log("Password form is valid");
-        pswdLoginForm.classList.add("hide");
-        loader.classList.remove("hide");
-
-        msgSuccess.innerText = "Logging In...";
-        setTimeout(() => {
-          msgSuccess.innerText = `Welcome back, ${pswdMatchedUser.username}!`;
-          setTimeout(() => {
-            // Store username in sessionStorage
-            sessionStorage.setItem("username", pswdMatchedUser.username);
-            window.location.href = "/pages/home.html";
-            loader.classList.add("hide");
-          }, 2000);
-        }, 1500);
+        loginData.password = pswdValue;
+        getUser(loginData);
       }
     });
   }

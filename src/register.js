@@ -23,7 +23,55 @@ const backName = id("backName");
 const backEmail = id("backEmail");
 const backLogin = id("backLogin");
 
-async function registerUsers() {
+const userData = {};
+
+// Register user to server
+async function registerToServer(data) {
+  const url = "";
+  try {
+    loader.classList.remove("hide");
+    msgSuccess.textContent = "Creating your Account...";
+    cfmPwdMsg.textContent = ""
+    cfmPwdMsg.classList.remove("showMsg");
+    confirmPswdform.classList.add("hide");
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || `HTTP Error: ${response.status}`);
+    }
+    const res = await response.json();
+
+    if (response.status === 200) {
+      msgSuccess.innerText = "Account created successfully!";
+      setTimeout(() => {
+        loader.classList.add("hide");
+        console.log("Registration successful:", res);
+        // window.location.href = "/pages/home.html";
+      }, 1500);
+    }
+  } catch (error) {
+    loader.classList.add("hide");
+    msgSuccess.innerText = "";
+    confirmPswdform.classList.remove("hide");
+
+    const msg = error.message.toLowerCase().includes("email")
+      ? "This email already has an account. Please log in or use a different email."
+      : "Registration failed. Please try again later.";
+    cfmPwdMsg.innerText = msg;
+    cfmPwdMsg.classList.add("showMsg");
+    console.error("Error during registration:", error);
+  }
+}
+
+// Registration process
+function registerUsers() {
   //  Email form submission
   if (emailform) {
     emailform.addEventListener("submit", (e) => {
@@ -60,9 +108,11 @@ async function registerUsers() {
       }
 
       if (valid) {
+        userData.email = emailValue;
+
         emailMsg.textContent = "";
         emailMsg.classList.remove("showMsg");
-        console.log("Email form is valid");
+        
         emailform.classList.add("hide");
         loader.classList.remove("hide");
         setTimeout(() => {
@@ -70,7 +120,6 @@ async function registerUsers() {
           nameform.classList.remove("hide");
         }, 2000);
       }
-      localStorage.setItem("email", emailValue);
     });
   }
 
@@ -124,12 +173,14 @@ async function registerUsers() {
       }
 
       if (valid) {
+        userData.fullname = nameValue;
+        userData.username = usernameValue;
+
         fullnameMsg.textContent = "";
         userMsg.textContent = "";
         fullnameMsg.classList.remove("showMsg");
         userMsg.classList.remove("showMsg");
 
-        console.log("Fullname form is valid");
         nameform.classList.add("hide");
         loader.classList.remove("hide");
         setTimeout(() => {
@@ -137,8 +188,6 @@ async function registerUsers() {
           passwordform.classList.remove("hide");
         }, 2000);
       }
-      localStorage.setItem("fullname", nameValue);
-      localStorage.setItem("username", usernameValue);
     });
   }
 
@@ -201,6 +250,8 @@ async function registerUsers() {
       }
 
       if (valid) {
+        userData.password = pwdValue;
+
         pwdMsg.textContent = "";
         pwdMsg.classList.remove("showMsg");
         console.log("Password form is valid");
@@ -211,7 +262,6 @@ async function registerUsers() {
           confirmPswdform.classList.remove("hide");
         }, 2000);
       }
-      localStorage.setItem("password", pwdValue);
     });
   }
 
@@ -220,7 +270,6 @@ async function registerUsers() {
     confirmPswdform.addEventListener("submit", (e) => {
       e.preventDefault();
       let cfmPsdValue = cfmPassword.value;
-      let pswdValue = password.value;
 
       let valid = true;
       cfmPwdMsg.textContent = "";
@@ -233,7 +282,7 @@ async function registerUsers() {
           element: cfmPwdMsg,
         },
         {
-          condition: cfmPsdValue !== pswdValue,
+          condition: cfmPsdValue !== userData.password,
           message: "Passwords do not match.",
           element: cfmPwdMsg,
         },
@@ -251,46 +300,7 @@ async function registerUsers() {
       }
 
       if (valid) {
-        cfmPwdMsg.textContent = "";
-        cfmPwdMsg.classList.remove("showMsg");
-        console.log("Confirm Password form is valid");
-
-        confirmPswdform.classList.add("hide");
-        loader.classList.remove("hide");
-
-        const userDB = JSON.parse(localStorage.getItem("userDatabase")) || [];
-        const emailTaken = userDB.some((user) => user.email === email.value.toLowerCase());
-
-        if (emailTaken) {
-          cfmPwdMsg.classList.add("showMsg");
-          cfmPwdMsg.innerText =
-            "This Email already has an account. Please Login.";
-
-          loader.classList.add("hide");
-          confirmPswdform.classList.remove("hide");
-        } else {
-          msgSuccess.innerText = "Creating your Account in a moment";
-          setTimeout(() => {
-            const newUser = {
-              email: localStorage.getItem("email"),
-              fullname: localStorage.getItem("fullname"),
-              username: localStorage.getItem("username"),
-              password: localStorage.getItem("password")
-            }
-            userDB.push(newUser);
-            localStorage.setItem("userDatabase", JSON.stringify(userDB));
-
-            localStorage.removeItem("email");
-            localStorage.removeItem("fullname");
-            localStorage.removeItem("password");
-
-            msgSuccess.innerText = "Account created successfully!";
-            setTimeout(() => {
-              loader.classList.add("hide");
-              window.location.href = "/pages/home.html";
-            }, 3000);
-          }, 1500);
-        }
+        registerToServer(userData);
       }
     });
   }
