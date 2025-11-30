@@ -3,17 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href=""
-    />
+    <link rel="stylesheet" href="" />
     <link rel="shortcut icon" href="/favicon.svg" type="image/svg" />
     <title>D'Bag Bank - Login</title>
   </head>
   <body class="body">
     <main>
       <img src="/logo-stacked.svg" alt="" class="logo" />
-      <form action="">
+      <div class="loader-container hide" id="loader">
+        <div class="spinner"></div>
+      </div>
+      <form action="" id="userLogin-form">
         <div class="form-group">
           <i class="ti ti-user icon"></i>
           <input
@@ -22,10 +22,16 @@
             id="username"
             name="username"
             placeholder="Enter username"
-            required
           />
         </div>
         <span class="error" id="user-error"></span>
+        <button type="submit" class="btn-submit">Continue</button>
+        <button type="submit" id="register" class="btn-submit">Register</button>
+      </form>
+
+      <!-- Password form -->
+      <form action="" id="pswdLogin-form" class="hide">
+        <i class="ti ti-chevron-left back" id="backToLogin"></i>
         <div class="form-group">
           <i class="ti ti-eye icon" id="psdShow"></i>
           <input
@@ -34,13 +40,13 @@
             id="password"
             name="password"
             placeholder="Enter password"
-            required
           />
         </div>
         <span class="error" id="password-error"></span>
-
-        <button type="submit" id="login" class="btn-submit">Login</button>
-        <button type="submit" id="register" class="btn-submit">Register</button>
+        <button type="submit" class="btn-submit">Login</button>
+        <p class="alt-login">
+          Already have an account? <a href="/index.html">Login here</a>
+        </p>
       </form>
     </main>
     <span class="msg-success" id="msg-success"></span>

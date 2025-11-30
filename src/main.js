@@ -6,8 +6,9 @@ const id = (id) => document.getElementById(id);
 const qa = (s) => document.querySelectorAll(s);
 const q = (s) => document.querySelector(s);
 
+const userLoginForm = id("userLogin-form");
+const pswdLoginForm = id("pswdLogin-form");
 const regBtn = id("register");
-const logBtn = id("login");
 const username = id("username");
 const password = id("password");
 const cfmPassword = id("cfm-password");
@@ -26,6 +27,7 @@ const moreBtn = id("moreBtn");
 const recipientInput = id("recipient");
 const msg = id("msg");
 const loader = id("loader");
+const backToLogin = id("backToLogin");
 
 import "./register.js";
 
@@ -42,6 +44,17 @@ if (regBtn) {
   regBtn.addEventListener("click", (e) => {
     e.preventDefault();
     window.location.href = "/pages/register.html";
+  });
+}
+
+if (backToLogin) {
+  backToLogin.addEventListener("click", () => {
+    loader.classList.remove("hide");
+    pswdLoginForm.classList.add("hide");
+    setTimeout(() => {
+      loader.classList.add("hide");
+      userLoginForm.classList.remove("hide");
+    }, 2000);
   });
 }
 
@@ -78,66 +91,14 @@ if (cfmPsdShow) {
       cfmPassword.type = "password";
     }
   });
-};
-
-// Login form submission
-if (logBtn) {
-  logBtn.addEventListener("click", async (e) => {
-    e.preventDefault();
-    const userValue = username.value;
-    const pswdValue = password.value;
-
-    if (!userValue || !pswdValue) {
-      if (!userValue) {
-        userMsg.innerText = "Username is required";
-      } else {
-        userMsg.innerText = "";
-      }
-
-      if (!pswdValue) {
-        pwdMsg.innerText = "Password is required";
-      } else {
-        pwdMsg.innerText = "";
-      }
-      return;
-    }
-
-    if (userValue.length < 3) {
-      userMsg.innerText = "Invalid Username";
-    } else {
-      userMsg.innerText = "";
-    }
-    if (pswdValue.length < 6) {
-      pwdMsg.innerText = "Invalid Password";
-    } else {
-      pwdMsg.innerText = "";
-    }
-    if (userValue.length < 3 || pswdValue.length < 6) {
-      return;
-    }
-
-    // Store username and password in sessionStorage
-    sessionStorage.setItem("username", userValue);
-    sessionStorage.setItem("password", pswdValue);
-
-    msgSuccess.innerText = "Logging In...";
-    setTimeout(() => {
-      msgSuccess.innerText = `Welcome back, ${userValue}!`;
-
-      setTimeout(() => {
-        window.location.href = "/pages/home.html";
-      }, 2000);
-    }, 1500);
-    username.value = "";
-    password.value = "";
-  });
 }
 
 // For the dashboard
 const user = id("user-name");
 if (user) {
-  const userValue = localStorage.getItem("username");
-  user.innerText = userValue;
+  const userStored = JSON.parse(sessionStorage.getItem("tempUser"));
+  const userValue = userStored ? userStored.username : null;
+  user.innerText = userValue || "Guest";
 }
 
 // Store the original balance text
@@ -218,19 +179,137 @@ if (recipientInput) {
     }
   });
 }
-
 // Check if user is authenticated
-// function checkAuth() {
-//   const username = sessionStorage.getItem("username");
-//   const password = sessionStorage.getItem("password");
+function checkAuth() {
+  const userDetail = JSON.parse(sessionStorage.getItem("tempUser"));
+  const user = userDetail ? userDetail.password && userDetail.username : null;
 
-//   // Get current page path
-//   const currentPage = window.location.pathname;
+  // Get current page path
+  const currentPage = window.location.pathname;
 
-//   const publicPages = ["/", "/index.html", "/pages/register.html"];
+  const publicPages = ["/", "/index.html", "/pages/register.html"];
 
-//   if ((!username || !password) && !publicPages.includes(currentPage)) {
-//     window.location.href = "/index.html";
-//   }
-// }
-// checkAuth();
+  if (!user && !publicPages.includes(currentPage)) {
+    window.location.href = "/index.html";
+  }
+}
+checkAuth();
+
+async function loginUsers() {
+  // Username form for Login
+  if (userLoginForm) {
+    userLoginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const usernameValue = username.value.toLowerCase().trim();
+      const userPattern = /^[a-zA-Z][a-zA-Z0-9_]{2,15}$/;
+
+      let valid = true;
+      userMsg.textContent = "";
+      userMsg.classList.remove("showMsg");
+
+      // Get userDatabase from localStorage
+      const userDB = JSON.parse(localStorage.getItem("userDatabase")) || [];
+
+      // Check if username exists in the database
+      const userExists = userDB.find((user) => user.username === usernameValue);
+
+      const validation = [
+        {
+          condition: usernameValue === "",
+          message: "Username is required",
+          element: userMsg,
+        },
+        {
+          condition: usernameValue !== "" && !userPattern.test(usernameValue),
+          message: "Invalid username.",
+          element: userMsg,
+        },
+        {
+          condition: usernameValue !== "" && !userExists,
+          message: "Username not found. Please register.",
+          element: userMsg,
+        },
+      ];
+
+      for (const validate of validation) {
+        if (validate.condition) {
+          valid = false;
+          validate.element.textContent = validate.message;
+          validate.element.classList.add("showMsg");
+          break;
+        }
+      }
+
+      if (valid) {
+        userMsg.textContent = "";
+        userMsg.classList.remove("showMsg");
+        console.log("Username form is valid");
+        userLoginForm.classList.add("hide");
+        loader.classList.remove("hide");
+
+        // Store the matched user data for password verification
+        sessionStorage.setItem("tempUser", JSON.stringify(userExists));
+
+        setTimeout(() => {
+          loader.classList.add("hide");
+          pswdLoginForm.classList.remove("hide");
+        }, 2000);
+      }
+    });
+  }
+
+  if (pswdLoginForm) {
+    pswdLoginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const pswdValue = password.value;
+      const pswdMatchedUser = JSON.parse(sessionStorage.getItem("tempUser"));
+      const matchedPassword = pswdMatchedUser ? pswdMatchedUser.password : null;
+
+      let valid = true;
+      pwdMsg.textContent = "";
+      pwdMsg.classList.remove("showMsg");
+
+      const validation = [
+        {
+          condition: pswdValue === "",
+          message: "Password is required",
+          element: pwdMsg,
+        },
+        {
+          condition: pswdValue !== "" && pswdValue !== matchedPassword,
+          message: "Password does not match.",
+          element: pwdMsg,
+        },
+      ];
+
+      for (let validate of validation) {
+        if (validate.condition) {
+          valid = false;
+          validate.element.textContent = validate.message;
+          validate.element.classList.add("showMsg");
+          break;
+        }
+      }
+
+      if (valid) {
+        pwdMsg.textContent = "";
+        pwdMsg.classList.remove("showMsg");
+        console.log("Password form is valid");
+        pswdLoginForm.classList.add("hide");
+        loader.classList.remove("hide");
+
+        msgSuccess.innerText = "Logging In...";
+        setTimeout(() => {
+          msgSuccess.innerText = `Welcome back, ${pswdMatchedUser.username}!`;
+          setTimeout(() => {
+            // Store username in sessionStorage
+            sessionStorage.setItem("username", pswdMatchedUser.username);
+            window.location.href = "/pages/home.html";
+            loader.classList.add("hide");
+          }, 2000);
+        }, 1500);
+      }
+    });
+  }
+}
+loginUsers();
