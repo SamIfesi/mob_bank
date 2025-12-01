@@ -25,13 +25,15 @@ const backLogin = id("backLogin");
 
 const userData = {};
 
+
 // Register user to server
 async function registerToServer(data) {
-  const url = "";
+  const url = "http://localhost/php_sandbox/mob_bank_db/api/register.php";
+  console.log(data)
   try {
     loader.classList.remove("hide");
     msgSuccess.textContent = "Creating your Account...";
-    cfmPwdMsg.textContent = ""
+    cfmPwdMsg.textContent = "";
     cfmPwdMsg.classList.remove("showMsg");
     confirmPswdform.classList.add("hide");
 
@@ -48,7 +50,7 @@ async function registerToServer(data) {
     }
     const res = await response.json();
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       msgSuccess.innerText = "Account created successfully!";
       setTimeout(() => {
         loader.classList.add("hide");
@@ -61,10 +63,26 @@ async function registerToServer(data) {
     msgSuccess.innerText = "";
     confirmPswdform.classList.remove("hide");
 
-    const msg = error.message.toLowerCase().includes("email")
-      ? "This email already has an account. Please log in or use a different email."
-      : "Registration failed. Please try again later.";
-    cfmPwdMsg.innerText = msg;
+    let displayMsg = "Registration failed. Please check your network.";
+    const lowerMsg = error.message.toLowerCase();
+    if (lowerMsg.includes("email or username already exists")) {
+      displayMsg = `This ${email.value} or username ${username.value} already has an account. Please try a different one.`;
+    } else if (lowerMsg.includes("all fields are required")) {
+      displayMsg =
+        "Missing data. Please go back and ensure all fields are filled.";
+    } else if (lowerMsg.includes("invalid email format")) {
+      displayMsg = "The email address provided is invalid.";
+    } else if (lowerMsg.includes("password must be at least 8 characters")) {
+      displayMsg =
+        "Password is too short. It must be 8 characters or more.";
+    } else if (
+      lowerMsg.includes("server error") ||
+      lowerMsg.includes("http error: 500")
+    ) {
+      displayMsg =
+        "An internal server error occurred. Please try again later.";
+    }
+    cfmPwdMsg.innerText = displayMsg;
     cfmPwdMsg.classList.add("showMsg");
     console.error("Error during registration:", error);
   }
@@ -112,7 +130,7 @@ function registerUsers() {
 
         emailMsg.textContent = "";
         emailMsg.classList.remove("showMsg");
-        
+
         emailform.classList.add("hide");
         loader.classList.remove("hide");
         setTimeout(() => {
@@ -173,7 +191,7 @@ function registerUsers() {
       }
 
       if (valid) {
-        userData.fullname = nameValue;
+        userData.name = nameValue;
         userData.username = usernameValue;
 
         fullnameMsg.textContent = "";
