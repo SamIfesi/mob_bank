@@ -180,32 +180,34 @@ if (recipientInput) {
   });
 }
 // Check if user is authenticated
-function checkAuth() {
-  const userDetail = JSON.parse(localStorage.getItem("tempUser"));
-  const user = userDetail ? userDetail.password && userDetail.username : null;
+// function checkAuth() {
+//   const userDetail = JSON.parse(localStorage.getItem("tempUser"));
+//   const user = userDetail ? userDetail.password && userDetail.username : null;
 
-  // Get current page path
-  const currentPage = window.location.pathname;
+//   // Get current page path
+//   const currentPage = window.location.pathname;
 
-  const publicPages = ["/", "/index.html", "/pages/register.html"];
+//   const publicPages = ["/", "/index.html", "/pages/register.html"];
 
-  if (!user && !publicPages.includes(currentPage)) {
-    window.location.href = "/index.html";
-  }
-}
-checkAuth();
+//   if (!user && !publicPages.includes(currentPage)) {
+//     window.location.href = "/index.html";
+//   }
+// }
+// checkAuth();
 
 const loginData = {};
 
 // get users from server
-async function getUser(data) {
-  const url = "";
+async function login(data) {
+  const url = "http://localhost/php_sandbox/mob_bank_db/api/login.php";
   try {
     loader.classList.remove("hide");
     msgSuccess.textContent = "Verifyind Credentials...";
-    passwordform.classList.add("hide");
+    pswdLoginForm.classList.add("hide");
     pwdMsg.textContent = "";
     pwdMsg.classList.remove("showMsg");
+
+
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -213,20 +215,18 @@ async function getUser(data) {
       },
       body: JSON.stringify(data),
     });
-    if(!response.ok){
-      const errorData = await response.json();
-      throw new Error(
-        errorData.message || "Invalid credentials or server error."
-      );
+    const result = await response.json();
+    if (!response.ok) {
+      // const errorData = await response.json();
+      throw new Error(result.message || `HTTP Error: ${response.status}`);
     }
 
-    const result = await response.json();
-    if (response.status === 200){
+    if (response.status === 200) {
       const usernameDisplay = result.username || data.username;
       sessionStorage.setItem("username", usernameDisplay);
       msgSuccess.textContent = `Welcome back ${usernameDisplay}!`;
       setTimeout(() => {
-        // window.location.href = "/pages/home.html";
+        window.location.href = "/pages/home.html";
         loader.classList.add("hide");
       }, 2000);
     }
@@ -234,8 +234,34 @@ async function getUser(data) {
     loader.classList.add("hide");
     msgSuccess.innerText = "";
     pswdLoginForm.classList.remove("hide");
+
+    let displayMsg = "login failed. Please try again.";
+    const lowerMsg = error.message.toLowerCase();
+
+    const errorMsgs = [
+      {
+        condition: lowerMsg.includes("invalid username or password"),
+        getMessage: () => "Invalid username or password. Please try again.",
+      },
+      {
+        condition:
+          lowerMsg.includes("server error") ||
+          lowerMsg.includes("http error: 500"),
+        getMessage: () =>
+          "An internal server error occurred. Please try again later.",
+      },
+    ];
+
+    for (const errorMsg of errorMsgs) {
+      if (errorMsg.condition) {
+        displayMsg = errorMsg.getMessage();
+        break;
+      }
+    }
+
+    pwdMsg.innerText = displayMsg;
     pwdMsg.classList.add("showMsg");
-    pwdMsg.textContent = error.message;
+    console.error("Error during login", error)
   }
 }
 
@@ -262,11 +288,6 @@ function loginUsers() {
           message: "Invalid username.",
           element: userMsg,
         },
-        {
-          condition: usernameValue !== "" && !userExists,
-          message: "Username not found. Please register.",
-          element: userMsg,
-        },
       ];
 
       for (const validate of validation) {
@@ -288,7 +309,7 @@ function loginUsers() {
         setTimeout(() => {
           loader.classList.add("hide");
           pswdLoginForm.classList.remove("hide");
-        }, 2000);
+        }, 1500);
       }
     });
   }
@@ -319,9 +340,9 @@ function loginUsers() {
         }
       }
 
+      loginData.password = pswdValue;
       if (valid) {
-        loginData.password = pswdValue;
-        getUser(loginData);
+        login(loginData);
       }
     });
   }

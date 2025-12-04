@@ -54,8 +54,7 @@ async function registerToServer(data) {
       msgSuccess.innerText = "Account created successfully!";
       setTimeout(() => {
         loader.classList.add("hide");
-        console.log("Registration successful:", res);
-        // window.location.href = "/pages/home.html";
+        window.location.href = "/pages/home.html";
       }, 1500);
     }
   } catch (error) {
@@ -65,22 +64,37 @@ async function registerToServer(data) {
 
     let displayMsg = "Registration failed. Please check your network.";
     const lowerMsg = error.message.toLowerCase();
-    if (lowerMsg.includes("email or username already exists")) {
-      displayMsg = `This ${email.value} or username ${username.value} already has an account. Please try a different one.`;
-    } else if (lowerMsg.includes("all fields are required")) {
-      displayMsg =
-        "Missing data. Please go back and ensure all fields are filled.";
-    } else if (lowerMsg.includes("invalid email format")) {
-      displayMsg = "The email address provided is invalid.";
-    } else if (lowerMsg.includes("password must be at least 8 characters")) {
-      displayMsg =
-        "Password is too short. It must be 8 characters or more.";
-    } else if (
-      lowerMsg.includes("server error") ||
-      lowerMsg.includes("http error: 500")
-    ) {
-      displayMsg =
-        "An internal server error occurred. Please try again later.";
+
+    const errorMsgs = [
+      {
+        condition: lowerMsg.includes("email or username already exists"),
+        getMessage: () => `This ${email.value} or ${username.value} already has an account. Please try a different one.`,
+      },
+      {
+        condition: lowerMsg.includes("all fields are required"),
+        getMessage: () => "Missing data. Please go back and ensure all fields are filled.",
+      },
+      {
+        condition: lowerMsg.includes("invalid email format"),
+        getMessage: () => "The email address provided is invalid.",
+      },
+      {
+        condition: lowerMsg.includes("password must be at least 8 characters"),
+        getMessage: () => "Password is too short. It must be 8 characters or more.",
+      },
+      {
+        // Check for server errors
+        condition: lowerMsg.includes("server error") || lowerMsg.includes("http error: 500"),
+        getMessage: () => "An internal server error occurred. Please try again later.",
+      },
+    ];
+
+    // Iterate through the mappings and set displayMsg if a condition is met
+    for (const errorMsg of errorMsgs) {
+      if (errorMsg.condition) {
+        displayMsg = errorMsg.getMessage();
+        break;
+      }
     }
     cfmPwdMsg.innerText = displayMsg;
     cfmPwdMsg.classList.add("showMsg");
@@ -136,7 +150,7 @@ function registerUsers() {
         setTimeout(() => {
           loader.classList.add("hide");
           nameform.classList.remove("hide");
-        }, 2000);
+        }, 1500);
       }
     });
   }
@@ -204,7 +218,7 @@ function registerUsers() {
         setTimeout(() => {
           loader.classList.add("hide");
           passwordform.classList.remove("hide");
-        }, 2000);
+        }, 1500);
       }
     });
   }
@@ -278,7 +292,7 @@ function registerUsers() {
         setTimeout(() => {
           loader.classList.add("hide");
           confirmPswdform.classList.remove("hide");
-        }, 2000);
+        }, 1500);
       }
     });
   }
@@ -333,7 +347,7 @@ if (backPsd) {
     setTimeout(() => {
       loader.classList.add("hide");
       passwordform.classList.remove("hide");
-    }, 2000);
+    }, 1500);
   });
 }
 if (backName) {
@@ -343,7 +357,7 @@ if (backName) {
     setTimeout(() => {
       loader.classList.add("hide");
       nameform.classList.remove("hide");
-    }, 2000);
+    }, 1500);
   });
 }
 if (backEmail) {
@@ -353,7 +367,7 @@ if (backEmail) {
     setTimeout(() => {
       loader.classList.add("hide");
       emailform.classList.remove("hide");
-    }, 2000);
+    }, 1500);
   });
 }
 if (backLogin) {
@@ -363,6 +377,6 @@ if (backLogin) {
     setTimeout(() => {
       loader.classList.add("hide");
       window.location.href = "/index.html";
-    }, 2000);
+    }, 1500);
   });
 }
