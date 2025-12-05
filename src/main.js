@@ -180,20 +180,22 @@ if (recipientInput) {
   });
 }
 // Check if user is authenticated
-// function checkAuth() {
-//   const userDetail = JSON.parse(localStorage.getItem("tempUser"));
-//   const user = userDetail ? userDetail.password && userDetail.username : null;
+function checkAuth() {
+  const userStored = JSON.parse(sessionStorage.getItem("tempUser"));
+  const isAuthenticated = userStored && userStored.username && userStored.isLoggedIn;
 
-//   // Get current page path
-//   const currentPage = window.location.pathname;
+  // Get current page path
+  const currentPage = window.location.pathname;
 
-//   const publicPages = ["/", "/index.html", "/pages/register.html"];
+  const publicPages = ["/", "/index.html", "/pages/register.html"];
 
-//   if (!user && !publicPages.includes(currentPage)) {
-//     window.location.href = "/index.html";
-//   }
-// }
-// checkAuth();
+  if (!isAuthenticated && !publicPages.includes(currentPage)) {
+    window.location.href = "/index.html";
+  }else if (isAuthenticated && publicPages.includes(currentPage)) {
+    window.location.href = "/pages/home.html";
+  }
+}
+checkAuth();
 
 const loginData = {};
 
@@ -202,7 +204,7 @@ async function login(data) {
   const url = "http://localhost/php_sandbox/mob_bank_db/api/login.php";
   try {
     loader.classList.remove("hide");
-    msgSuccess.textContent = "Verifyind Credentials...";
+    msgSuccess.textContent = "Verifying Credentials...";
     pswdLoginForm.classList.add("hide");
     pwdMsg.textContent = "";
     pwdMsg.classList.remove("showMsg");
@@ -215,15 +217,22 @@ async function login(data) {
       },
       body: JSON.stringify(data),
     });
-    const result = await response.json();
     if (!response.ok) {
-      // const errorData = await response.json();
-      throw new Error(result.message || `HTTP Error: ${response.status}`);
+      const errorData = await response
+        .json()
+        .catch(() => ({ message: "Server Error" }));
+      throw new Error(errorData.message || `HTTP Error: ${response.status}`);
     }
-
+    
+    const result = await response.json();
     if (response.status === 200) {
-      const usernameDisplay = result.username || data.username;
-      sessionStorage.setItem("username", usernameDisplay);
+      const usernameDisplay = result.username;
+
+      const userData = {
+        username: usernameDisplay,
+        isLoggedIn: true,
+      }
+      sessionStorage.setItem("tempUser", JSON.stringify(userData));
       msgSuccess.textContent = `Welcome back ${usernameDisplay}!`;
       setTimeout(() => {
         window.location.href = "/pages/home.html";
